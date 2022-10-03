@@ -15,6 +15,7 @@ export default function Navigation() {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: styles.navigationContainer,
+        headerShown: false,
       }}
     >
       <Tab.Screen
