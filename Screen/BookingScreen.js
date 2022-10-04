@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 
-export default function BookingScreen() {
+export default function BookingScreen({navigation}) {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.titleScreen}>Đặt vé</Text>
@@ -22,7 +22,11 @@ export default function BookingScreen() {
           date: "",
           sheetTotal: 0,
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => {
+          console.log(values),
+          navigation.navigate('BOOKING_INFO')
+        }}
+
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View style={styles.form}>
@@ -156,4 +160,3 @@ const styles = StyleSheet.create({
   },
 });
 
-const placehoder = {};

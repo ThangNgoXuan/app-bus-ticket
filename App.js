@@ -8,6 +8,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import InformationScreen from "./Screen/InformationScreen";
 import SignInScreen from "./Screen/SignInScreen";
 import SignUpScreen from "./Screen/SignUpScreen";
+import BookingInfoScreen from "./Screen/BookingInfoScreen";
+import ChooseSeetScreen from "./Screen/ChooseSeetScreen";
+import PaymentScreen from "./Screen/PaymentScreen";
+import InfoTicketScreen from "./Screen/InfoTicketScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -24,7 +28,7 @@ export default function App() {
           />
           <StatusBar style="light" />
           <Stack.Navigator
-            initialRouteName="SIGNIN"
+            initialRouteName="PAYMENT"
             screenOptions={{
               headerShown: false,
             }}
@@ -33,6 +37,10 @@ export default function App() {
             <Stack.Screen name="INFORMATION" component={InformationScreen} />
             <Stack.Screen name="SIGNIN" component={SignInScreen} />
             <Stack.Screen name="SIGNUP" component={SignUpScreen} />
+            <Stack.Screen name="BOOKING_INFO" component={BookingInfoScreen} />
+            <Stack.Screen name="CHOOSE_SEET" component={ChooseSeetScreen} />
+            <Stack.Screen name="PAYMENT" component={PaymentScreen} />
+            <Stack.Screen name="INFOR_TICKET" component={InfoTicketScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>
