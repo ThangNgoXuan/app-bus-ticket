@@ -1,25 +1,24 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Image, View } from "react-native";
-import { StyleSheet, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import AccountScreen from "../Screen/AccountScreen";
-import BookingScreen from "../Screen/BookingScreen";
-import HomeScreen from "../Screen/HomeScreen";
-import MapScreen from "../Screen/MapScreen";
+import { Image, View, StyleSheet, Text } from "react-native";
+import AccountScreen from "./AccountScreen";
+import BookingScreen from "./BookingScreen";
+import HomeScreen from "./HomeScreen";
+import MapScreen from "./MapScreen";
 
 const Tab = createBottomTabNavigator();
 
-export default function Navigation() {
+export default function NavigationScreen() {
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: styles.navigationContainer,
         headerShown: false,
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="HOME"
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
