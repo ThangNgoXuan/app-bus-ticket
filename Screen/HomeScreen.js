@@ -1,12 +1,20 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const newList = new Array(3).fill({
   imgSrc: "https://picsum.photos/50/50",
   title: "Lorem Ipsum is simply dummy text",
-  subTitle: "Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, ",
+  subTitle:
+    "Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, ",
 });
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <ScrollView>
       <View style={styles.screen}>
@@ -27,13 +35,14 @@ export default function HomeScreen() {
         <View style={styles.listNew}>
           <Text style={styles.title}>Tin tức</Text>
           {newList.map((item, index) => (
-            <TouchableOpacity style={styles.newItem} key={`newItem-${index.toString()}`}>
-              <Image
-                style={styles.newImage}
-                source={{ uri: item.imgSrc }}
-              />
+            <TouchableOpacity
+              onPressIn={() => navigation.navigate("NEW_DETAIL")}
+              style={styles.newItem}
+              key={`newItem-${index.toString()}`}
+            >
+              <Image style={styles.newImage} source={{ uri: item.imgSrc }} />
               <View style={styles.content}>
-                <Text style={styles.contentTitle} numberOfLines={1} >
+                <Text style={styles.contentTitle} numberOfLines={1}>
                   {item.title}
                 </Text>
                 <Text style={styles.contentSubTitle} numberOfLines={3}>
@@ -91,9 +100,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 
-  carousel: {
-  },
-  
+  carousel: {},
+
   listNew: {
     alignItems: "flex-start",
     width: "100%",
@@ -102,8 +110,8 @@ const styles = StyleSheet.create({
   },
 
   newItem: {
-    width: '100%',
-    flexDirection: 'row',
+    width: "100%",
+    flexDirection: "row",
     paddingVertical: 4,
   },
 
@@ -119,12 +127,12 @@ const styles = StyleSheet.create({
 
   contentTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    maxWidth: '87%',
+    fontWeight: "600",
+    maxWidth: "87%",
   },
 
   contentSubTitle: {
-    color: 'gray',
-    maxWidth: '87%',
-  }
+    color: "gray",
+    maxWidth: "87%",
+  },
 });

@@ -13,6 +13,7 @@ import ChooseSeetScreen from "./Screen/ChooseSeetScreen";
 import PaymentScreen from "./Screen/PaymentScreen";
 import InfoTicketScreen from "./Screen/InfoTicketScreen";
 import HistoryOrderScreen from "./Screen/HistoryOrderScreen";
+import NewDetailScreen from "./Screen/NewDetailScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
             <Stack.Screen name="PAYMENT" component={PaymentScreen} />
             <Stack.Screen name="INFOR_TICKET" component={InfoTicketScreen} />
             <Stack.Screen name="HISTORY_ORDER" component={HistoryOrderScreen} />
+            <Stack.Screen name="NEW_DETAIL" component={NewDetailScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

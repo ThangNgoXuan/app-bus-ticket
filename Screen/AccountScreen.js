@@ -30,7 +30,7 @@ export default function AccountScreen({navigation}) {
         </TouchableOpacity>
       </View>
       <View style={styles.containerList}>
-        <TouchableOpacity style={styles.listItem_lastchild} onPressIn={() => navigation.navigate("SIGNUP")}>
+        <TouchableOpacity style={styles.listItem_lastchild} onPressIn={() => navigation.navigate("SIGNIN")}>
           <Image
             source={require("../assets/Icons/logout.png")}
             resizeMode="contain"

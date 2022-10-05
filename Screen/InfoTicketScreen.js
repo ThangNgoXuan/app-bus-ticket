@@ -41,7 +41,7 @@ export default function InfoTicketScreen({ navigation }) {
           <Text style={styles.infoUserValue}>7:00 ngày 02/10/2022</Text>
         </View>
         <View style={styles.infoUserItem}>
-          <Text style={styles.infoUserKey}>Sô ghế</Text>
+          <Text style={styles.infoUserKey}>Số ghế</Text>
           <Text style={styles.infoUserValue}>A32</Text>
         </View>
         <View style={styles.infoUserItem}>

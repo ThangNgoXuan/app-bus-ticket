@@ -18,8 +18,8 @@ export default function MapScreen() {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 	10.762622,
-          longitude: 	106.660172,
+          latitude: 	10.850720,
+          longitude: 	106.771729,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
