@@ -22,10 +22,12 @@ export default function AccountScreen({navigation}) {
           />
           <Text style={styles.textItem}>Điểm thưởng</Text>
         </View>
-        <View style={styles.listItem_lastchild}>
+        <TouchableOpacity style={styles.listItem_lastchild}
+          onPressIn={() => navigation.navigate("HISTORY_ORDER")}
+        >
           <Image style={styles.icon} source={require("../assets/Icons/history.png")} />
-          <Text style={styles.textItem}>Lịch sử mua hàng</Text>
-        </View>
+          <Text style={styles.textItem}>Lịch sử đặt vé</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.containerList}>
         <TouchableOpacity style={styles.listItem_lastchild} onPressIn={() => navigation.navigate("SIGNUP")}>
