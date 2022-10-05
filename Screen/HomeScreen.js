@@ -26,8 +26,8 @@ export default function HomeScreen() {
         />
         <View style={styles.listNew}>
           <Text style={styles.title}>Tin tức</Text>
-          {newList.map((item) => (
-            <TouchableOpacity style={styles.newItem}>
+          {newList.map((item, index) => (
+            <TouchableOpacity style={styles.newItem} key={`newItem-${index.toString()}`}>
               <Image
                 style={styles.newImage}
                 source={{ uri: item.imgSrc }}

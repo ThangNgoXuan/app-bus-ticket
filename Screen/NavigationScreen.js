@@ -10,6 +10,7 @@ const Tab = createBottomTabNavigator();
 export default function NavigationScreen() {
   return (
     <Tab.Navigator
+      initialRouteName="MAP"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: styles.navigationContainer,
