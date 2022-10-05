@@ -30,7 +30,7 @@ export default function App() {
           />
           <StatusBar style="light" />
           <Stack.Navigator
-            initialRouteName="NAVIGATION"
+            initialRouteName="BOOKING"
             screenOptions={{
               headerShown: false,
             }}

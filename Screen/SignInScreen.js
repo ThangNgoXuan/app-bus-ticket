@@ -2,6 +2,7 @@ import { Formik } from "formik";
 import React from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { loginValidationSchema } from "../Utils/Validaion";
 
 export default function SignInScreen({ navigation }) {
   return (
@@ -14,6 +15,7 @@ export default function SignInScreen({ navigation }) {
       />
       <Text style={styles.textSignIn}>Chào mừng bạn đến với Bus Ticket.</Text>
       <Formik
+        validationSchema={loginValidationSchema}
         initialValues={{
           phone: "",
           password: "",
@@ -23,7 +25,7 @@ export default function SignInScreen({ navigation }) {
           navigation.navigate("NAVIGATION");
         }}
       >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
           <View style={styles.form}>
             <View style={styles.formField}>
               <View style={styles.inputWrapp}>
@@ -37,8 +39,14 @@ export default function SignInScreen({ navigation }) {
                   onBlur={handleBlur("phone")}
                   value={values.phone}
                   style={styles.input}
+                  keyboardType='numeric'
                 />
               </View>
+                {errors.phone && (
+                  <Text style={styles.errorText}>
+                    {errors.phone}
+                  </Text>
+                )}
             </View>
             <View style={styles.formField}>
               <View style={styles.inputWrapp}>
@@ -52,8 +60,14 @@ export default function SignInScreen({ navigation }) {
                   onBlur={handleBlur("end")}
                   value={values.password}
                   style={styles.input}
+                  secureTextEntry={true}
                 />
               </View>
+              {errors.password && (
+                <Text style={styles.errorText}>
+                  {errors.password}
+                </Text>
+              )}
             </View>
             <View style={styles.other}>
               <Text style={styles.textFoward}>Quên mật khẩu ?</Text>
@@ -152,4 +166,6 @@ const styles = StyleSheet.create({
   textFoward: {
     fontSize: 16,
   },
+
+  errorText: { fontSize: 10, color: "red" },
 });

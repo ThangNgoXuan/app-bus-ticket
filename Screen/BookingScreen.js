@@ -1,6 +1,6 @@
-import React from "react";
-import account from "../assets/Icons/account.png";
+import React, { useState } from "react";
 import { Formik } from "formik";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   View,
   Text,
@@ -11,7 +11,20 @@ import {
   ScrollView,
 } from "react-native";
 
-export default function BookingScreen({navigation}) {
+export default function BookingScreen({ navigation }) {
+  const [datePicker, setDatePicker] = useState(false);
+
+  const [date, setDate] = useState(new Date());
+
+  const showDatePicker = () => {
+    setDatePicker(true);
+  };
+
+  const onDateSelected = (even, value) => {
+    setDate(value);
+    setDatePicker(false);
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.titleScreen}>Đặt vé</Text>
@@ -19,86 +32,97 @@ export default function BookingScreen({navigation}) {
         initialValues={{
           start: "",
           end: "",
-          date: "",
+          date: date,
           sheetTotal: 0,
         }}
         onSubmit={(values) => {
-          console.log(values),
-          navigation.navigate('BOOKING_INFO')
+          console.log(values), navigation.navigate("BOOKING_INFO");
         }}
-
       >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <View style={styles.form}>
-            <View style={styles.formField}>
-              <Text>Chọn điểm đi</Text>
-              <View style={styles.inputWrapp}>
-                <Image
-                  style={styles.inputIcon}
-                  source={require("../assets/Icons/place.png")}
-                />
+        {({ handleChange, handleBlur, handleSubmit, values }) => {
+          return (
+            <View style={styles.form}>
+              <View style={styles.formField}>
+                <Text>Chọn điểm đi</Text>
+                <View style={styles.inputWrapp}>
+                  <Image
+                    style={styles.inputIcon}
+                    source={require("../assets/Icons/place.png")}
+                  />
 
-                <TextInput
-                  onChangeText={handleChange("start")}
-                  onBlur={handleBlur("start")}
-                  value={values.email}
-                  style={styles.input}
-                />
+                  <TextInput
+                    onChangeText={handleChange("start")}
+                    onBlur={handleBlur("start")}
+                    value={values.email}
+                    style={styles.input}
+                  />
+                </View>
               </View>
-            </View>
-            <View style={styles.formField}>
-              <Text>Chọn điểm đến</Text>
-              <View style={styles.inputWrapp}>
-                <Image
-                  style={styles.inputIcon}
-                  source={require("../assets/Icons/place.png")}
-                />
+              <View style={styles.formField}>
+                <Text>Chọn điểm đến</Text>
+                <View style={styles.inputWrapp}>
+                  <Image
+                    style={styles.inputIcon}
+                    source={require("../assets/Icons/place.png")}
+                  />
 
-                <TextInput
-                  onChangeText={handleChange("end")}
-                  onBlur={handleBlur("end")}
-                  value={values.email}
-                  style={styles.input}
-                />
+                  <TextInput
+                    onChangeText={handleChange("end")}
+                    onBlur={handleBlur("end")}
+                    value={values.email}
+                    style={styles.input}
+                  />
+                </View>
               </View>
-            </View>
-            <View style={styles.formField}>
-              <Text>Chọn ngày đi</Text>
-              <View style={styles.inputWrapp}>
-                <Image
-                  style={styles.inputIcon}
-                  source={require("../assets/Icons/calendar.png")}
-                />
+              <View style={styles.formField}>
+                <Text>Chọn ngày đi</Text>
+                <View style={styles.inputWrapp}>
+                  <Image
+                    style={styles.inputIcon}
+                    source={require("../assets/Icons/calendar.png")}
+                  />
+                  <TextInput
+                    onChangeText={handleChange("end")}
+                    onBlur={handleBlur("end")}
+                    value={`${date.getDate().toString()}/${date.getMonth().toString()}/${date.getFullYear().toString()}`}
+                    style={styles.input}
+                    onPressIn={showDatePicker}
+                  />
+                </View>
+                {datePicker && (
+                  <DateTimePicker
+                    value={date}
+                    mode={"date"}
+                    onChange={onDateSelected}
+                    dateFormat="DD-MM-YYYY"
+                  />
+                )}
+              </View>
+              <View style={styles.formField}>
+                <Text>Số ghế</Text>
+                <View style={styles.inputWrapp}>
+                  <Image
+                    style={styles.inputIcon}
+                    source={require("../assets/Icons/person.png")}
+                  />
 
-                <TextInput
-                  onChangeText={handleChange("start")}
-                  onBlur={handleBlur("start")}
-                  value={values.email}
-                  style={styles.input}
-                />
+                  <TextInput
+                    onChangeText={handleChange("start")}
+                    onBlur={handleBlur("start")}
+                    value={values.email}
+                    style={styles.input}
+                  />
+                </View>
               </View>
+              <TouchableOpacity
+                onPressIn={handleSubmit}
+                style={styles.btnSubmit}
+              >
+                <Text style={styles.textBtnSubmit}>Tiếp tục</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.formField}>
-              <Text>Số ghế</Text>
-              <View style={styles.inputWrapp}>
-                <Image
-                  style={styles.inputIcon}
-                  source={require("../assets/Icons/person.png")}
-                />
-
-                <TextInput
-                  onChangeText={handleChange("start")}
-                  onBlur={handleBlur("start")}
-                  value={values.email}
-                  style={styles.input}
-                />
-              </View>
-            </View>
-            <TouchableOpacity onPressIn={handleSubmit} style={styles.btnSubmit}>
-              <Text style={styles.textBtnSubmit}>Tiếp tục</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+          );
+        }}
       </Formik>
     </ScrollView>
   );
@@ -113,6 +137,10 @@ const styles = StyleSheet.create({
   titleScreen: {
     fontWeight: "800",
     fontSize: 20,
+  },
+
+  datePickerStyle: {
+    width: 230,
   },
 
   inputWrapp: {
@@ -159,4 +187,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
