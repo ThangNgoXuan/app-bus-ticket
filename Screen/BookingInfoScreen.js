@@ -1,24 +1,42 @@
 import { Formik } from "formik";
 import React from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { CheckBox } from "react-native-elements";
+import { bookingInfoValidationSchema } from "../Utils/Validaion";
 
-export default function BookingInfoScreen({navigation}) {
+export default function BookingInfoScreen({ navigation }) {
   return (
+    <>
+      <View style={styles.titleContainer}>
+        <TouchableOpacity onPressIn={() => navigation.navigate("NAVIGATION")}>
+          <Image
+            style={styles.iconTitle}
+            source={require("../assets/Icons/arrow.png")}
+          />
+        </TouchableOpacity>
+        <Text style={styles.titleScreen}>Thông tin khách hàng</Text>
+      </View>
     <View style={styles.container}>
-      <Text style={styles.titleScreen}>Thông tin khách hàng</Text>
       <Formik
+        validationSchema={bookingInfoValidationSchema}
         initialValues={{
           name: "",
           email: "",
           phone: "",
         }}
         onSubmit={(values) => {
-          console.log(values)
-          navigation.navigate('CHOOSE_SEET')
+          console.log(values);
+          navigation.navigate("CHOOSE_SEET");
         }}
       >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
           <View style={styles.form}>
             <View style={styles.formField}>
               <TextInput
@@ -28,6 +46,9 @@ export default function BookingInfoScreen({navigation}) {
                 placeholder={placehoder.name}
                 style={styles.formInput}
               />
+              {errors.name && (
+                <Text style={styles.errorText}>{errors.name}</Text>
+              )}
             </View>
             <View style={styles.formField}>
               <TextInput
@@ -37,6 +58,9 @@ export default function BookingInfoScreen({navigation}) {
                 placeholder={placehoder.phone}
                 style={styles.formInput}
               />
+              {errors.phone && (
+                <Text style={styles.errorText}>{errors.phone}</Text>
+              )}
             </View>
             <View style={styles.formField}>
               <TextInput
@@ -46,12 +70,15 @@ export default function BookingInfoScreen({navigation}) {
                 placeholder={placehoder.email}
                 style={styles.formInput}
               />
+              {errors.email && (
+                <Text style={styles.errorText}>{errors.email}</Text>
+              )}
             </View>
             <View style={styles.checkboxContainer}>
-              <CheckBox
-                checked={true}
-              />
-              <Text style={styles.label}>Chấp nhận điều khoản của Bus Ticket?</Text>
+              <CheckBox checked={true} />
+              <Text style={styles.label}>
+                Chấp nhận điều khoản của Bus Ticket?
+              </Text>
             </View>
             <TouchableOpacity style={styles.btnSubmit} onPressIn={handleSubmit}>
               <Text style={styles.textBtnSubmit}>Tiếp tục</Text>
@@ -60,6 +87,7 @@ export default function BookingInfoScreen({navigation}) {
         )}
       </Formik>
     </View>
+    </>
   );
 }
 
@@ -69,9 +97,25 @@ const styles = StyleSheet.create({
     padding: 24,
   },
 
+  iconTitle: {
+    width: 20,
+    height: 20,
+  },
+
   titleScreen: {
     fontWeight: "800",
     fontSize: 20,
+    marginLeft: 8,
+  },
+
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderBottomColor: "rgba(0,0,0,0.1)",
+    borderBottomWidth: 0.5,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    width: "100%",
   },
 
   form: {
@@ -92,19 +136,17 @@ const styles = StyleSheet.create({
 
   checkboxContainer: {
     flexDirection: "row",
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '100%',
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: "100%",
   },
 
-  label: {
-
-  },
+  label: {},
 
   btnSubmit: {
     backgroundColor: "#001c6b",
     height: 50,
-    borderRadius: 50,
+    borderRadius: 15,
     width: 200,
     justifyContent: "center",
     alignItems: "center",
@@ -113,6 +155,11 @@ const styles = StyleSheet.create({
 
   textBtnSubmit: {
     color: "#fff",
+  },
+
+  errorText: {
+    fontSize: 10,
+    color: "red",
   },
 });
 

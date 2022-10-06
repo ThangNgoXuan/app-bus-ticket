@@ -33,7 +33,6 @@ export default function SignInScreen({ navigation }) {
                   style={styles.inputIcon}
                   source={require("../assets/Icons/phone.png")}
                 />
-
                 <TextInput
                   onChangeText={handleChange("phone")}
                   onBlur={handleBlur("phone")}

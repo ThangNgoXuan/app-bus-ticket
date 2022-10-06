@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 export default function NavigationScreen() {
   return (
     <Tab.Navigator
-      initialRouteName="BOOKING"
+      initialRouteName="HOME"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: styles.navigationContainer,

@@ -1,8 +1,30 @@
 import { Formik } from "formik";
+import { useState } from "react";
 import { TextInput } from "react-native";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { RadioButton } from "react-native-paper";
+import { chooseSeetValidationSchema } from "../Utils/Validaion";
+
+const lisPlace = [
+  {
+    id: "1",
+    value: "congvien",
+    label: "Công viên Nhơn Hạnh",
+  },
+  {
+    id: "2",
+    value: "benxe",
+    label: "Bến xe Qui Nhơn",
+  },
+  {
+    id: "3",
+    value: "nhonhanh",
+    label: "Nhơn Phong",
+  },
+];
 
 export default function ChooseSeetScreen({ navigation }) {
+  const [checked, setChecked] = useState(lisPlace[0].value);
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -22,14 +44,14 @@ export default function ChooseSeetScreen({ navigation }) {
         initialValues={{
           timeStart: "",
           seetNumber: "",
-          pointStart: "",
-          sheetTotal: 0,
+          pointStart: checked,
         }}
         onSubmit={(values) => {
           console.log(values), navigation.navigate("PAYMENT");
         }}
+        validationSchema={chooseSeetValidationSchema}
       >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
           <View style={styles.form}>
             <View style={styles.formField}>
               <Text>Chọn giờ đi</Text>
@@ -43,13 +65,16 @@ export default function ChooseSeetScreen({ navigation }) {
                   onChangeText={handleChange("timeStart")}
                   onBlur={handleBlur("timeStart")}
                   value={values.timeStart}
-                  style={styles.timeStart}
+                  style={styles.input}
                 />
               </View>
+              {errors.timeStart && (
+                <Text style={styles.errorText}>{errors.timeStart}</Text>
+              )}
             </View>
 
             <View style={styles.formField}>
-              <Text>Chọn số ghế</Text>
+              <Text>Chọn ghế</Text>
               <View style={styles.inputWrapp}>
                 <Image
                   style={styles.inputIcon}
@@ -60,13 +85,46 @@ export default function ChooseSeetScreen({ navigation }) {
                   onChangeText={handleChange("seetNumber")}
                   onBlur={handleBlur("seetNumber")}
                   value={values.seetNumber}
-                  style={styles.seetNumber}
+                  style={styles.input}
                 />
               </View>
+              {errors.seetNumber && (
+                <Text style={styles.errorText}>{errors.seetNumber}</Text>
+              )}
             </View>
 
             <View style={styles.formField}>
               <Text>Chọn điểm đón</Text>
+              <View style={styles.radioContainer}>
+                <RadioButton.Group
+                  onValueChange={handleChange("pointStart")}
+                  value={values.pointStart}
+                >
+                {lisPlace.map((item, index) => (
+                  <View
+                  style={styles.radioWrap}
+                  >
+                    <RadioButton
+                    key={`radio-button-${index.toString()}`}
+                      value={item.value}
+                      status={checked === item.value ? "checked" : "unchecked"}
+                      onPressIn={() => setChecked(item.value)}
+                      color="#001c6b"
+                    />
+                    <Text
+                      style={
+                        checked == item.value && {
+                          color: "#001c6b",
+                          fontWeight: "700",
+                        }
+                      }
+                    >
+                      {item.label}
+                    </Text>
+                  </View>
+                ))}
+                </RadioButton.Group>
+              </View>
             </View>
             <TouchableOpacity onPressIn={handleSubmit} style={styles.btnSubmit}>
               <Text style={styles.textBtnSubmit}>Tiếp tục</Text>
@@ -86,9 +144,16 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.1)",
+    borderBottomColor: "rgba(0,0,0,0.1)",
+    borderBottomWidth: 0.5,
     paddingHorizontal: 16,
     paddingVertical: 12,
+    width: "100%",
+  },
+
+  input: {
+    flex: 1,
+    marginLeft: 8,
   },
 
   iconTitle: {
@@ -157,5 +222,19 @@ const styles = StyleSheet.create({
   textBtnSubmit: {
     color: "#fff",
     fontSize: 16,
+  },
+
+  radioContainer: {
+    marginTop: 8,
+  },
+
+  radioWrap: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  errorText: {
+    fontSize: 10,
+    color: "red",
   },
 });

@@ -2,6 +2,7 @@ import { Formik } from "formik";
 import React from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Text, View } from "react-native";
+import { signUpValidationSchema } from "../Utils/Validaion";
 
 export default function SignUpScreen({ navigation }) {
   return (
@@ -14,8 +15,9 @@ export default function SignUpScreen({ navigation }) {
       />
       <Text style={styles.textSignIn}>Đăng kí</Text>
       <Formik
+        validationSchema={signUpValidationSchema}
         initialValues={{
-          name: '',
+          name: "",
           phone: "",
           password: "",
           confirmPassword: "",
@@ -25,7 +27,7 @@ export default function SignUpScreen({ navigation }) {
           navigation.navigate("NAVIGATION");
         }}
       >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
           <View style={styles.form}>
             <View style={styles.formField}>
               <View style={styles.inputWrapp}>
@@ -41,6 +43,9 @@ export default function SignUpScreen({ navigation }) {
                   placeholder="Họ tên (*)"
                 />
               </View>
+              {errors.name && (
+                <Text style={styles.errorText}>{errors.name}</Text>
+              )}
             </View>
             <View style={styles.formField}>
               <View style={styles.inputWrapp}>
@@ -54,8 +59,12 @@ export default function SignUpScreen({ navigation }) {
                   value={values.phone}
                   style={styles.input}
                   placeholder="Số điện thoại (*)"
+                  keyboardType="numeric"
                 />
               </View>
+              {errors.phone && (
+                <Text style={styles.errorText}>{errors.phone}</Text>
+              )}
             </View>
             <View style={styles.formField}>
               <View style={styles.inputWrapp}>
@@ -72,6 +81,9 @@ export default function SignUpScreen({ navigation }) {
                   placeholder="Mật khẩu (*)"
                 />
               </View>
+              {errors.password && (
+                <Text style={styles.errorText}>{errors.password}</Text>
+              )}
             </View>
             <View style={styles.formField}>
               <View style={styles.inputWrapp}>
@@ -184,5 +196,10 @@ const styles = StyleSheet.create({
 
   textFoward: {
     fontSize: 16,
+  },
+
+  errorText: {
+    fontSize: 10,
+    color: "red",
   },
 });

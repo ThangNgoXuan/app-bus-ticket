@@ -10,6 +10,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
+import { bookingValidationSchema } from "../Utils/Validaion";
 
 export default function BookingScreen({ navigation }) {
   const [datePicker, setDatePicker] = useState(false);
@@ -29,6 +30,7 @@ export default function BookingScreen({ navigation }) {
     <ScrollView style={styles.container}>
       <Text style={styles.titleScreen}>Đặt vé</Text>
       <Formik
+        validationSchema={bookingValidationSchema}
         initialValues={{
           start: "",
           end: "",
@@ -39,7 +41,7 @@ export default function BookingScreen({ navigation }) {
           console.log(values), navigation.navigate("BOOKING_INFO");
         }}
       >
-        {({ handleChange, handleBlur, handleSubmit, values }) => {
+        {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
           return (
             <View style={styles.form}>
               <View style={styles.formField}>
@@ -53,10 +55,13 @@ export default function BookingScreen({ navigation }) {
                   <TextInput
                     onChangeText={handleChange("start")}
                     onBlur={handleBlur("start")}
-                    value={values.email}
+                    value={values.start}
                     style={styles.input}
                   />
                 </View>
+                {errors.start && (
+                  <Text style={styles.errorText}>{errors.start}</Text>
+                )}
               </View>
               <View style={styles.formField}>
                 <Text>Chọn điểm đến</Text>
@@ -69,10 +74,13 @@ export default function BookingScreen({ navigation }) {
                   <TextInput
                     onChangeText={handleChange("end")}
                     onBlur={handleBlur("end")}
-                    value={values.email}
+                    value={values.end}
                     style={styles.input}
                   />
                 </View>
+                {errors.end && (
+                  <Text style={styles.errorText}>{errors.end}</Text>
+                )}
               </View>
               <View style={styles.formField}>
                 <Text>Chọn ngày đi</Text>
@@ -82,11 +90,14 @@ export default function BookingScreen({ navigation }) {
                     source={require("../assets/Icons/calendar.png")}
                   />
                   <TextInput
-                    onChangeText={handleChange("end")}
-                    onBlur={handleBlur("end")}
-                    value={`${date.getDate().toString()}/${date.getMonth().toString()}/${date.getFullYear().toString()}`}
+                    onChangeText={handleChange("date")}
+                    onBlur={handleBlur("date")}
+                    value={`${date.getDate().toString()}/${date
+                      .getMonth()
+                      .toString()}/${date.getFullYear().toString()}`}
                     style={styles.input}
                     onPressIn={showDatePicker}
+                    // showSoftInputOnFocus={false}
                   />
                 </View>
                 {datePicker && (
@@ -107,12 +118,16 @@ export default function BookingScreen({ navigation }) {
                   />
 
                   <TextInput
-                    onChangeText={handleChange("start")}
-                    onBlur={handleBlur("start")}
-                    value={values.email}
+                    onChangeText={handleChange("sheetTotal")}
+                    onBlur={handleBlur("sheetTotal")}
+                    value={values.sheetTotal}
                     style={styles.input}
+                    keyboardType="numeric"
                   />
                 </View>
+                {errors.sheetTotal && (
+                  <Text style={styles.errorText}>{errors.sheetTotal}</Text>
+                )}
               </View>
               <TouchableOpacity
                 onPressIn={handleSubmit}
@@ -185,5 +200,10 @@ const styles = StyleSheet.create({
   textBtnSubmit: {
     color: "#fff",
     fontSize: 16,
+  },
+
+  errorText: {
+    fontSize: 10,
+    color: "red",
   },
 });
