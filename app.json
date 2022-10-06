@@ -1,10 +1,11 @@
 {
   "expo": {
-    "name": "app-bus-ticket",
-    "slug": "app-bus-ticket",
+    "name": "Bus Ticket",
+    "slug": "bus-ticket",
     "version": "1.0.0",
+    "description": "This is awesome app.",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Icons/chair.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",

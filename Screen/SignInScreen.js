@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Formik } from "formik";
 import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
@@ -11,9 +10,13 @@ export default function SignInScreen({ navigation }) {
   useEffect(() => {
     TypeCoachApi.getAllTypeCoach().then((res) => {
       // setData(res?.data);
-      console.log(res?.data);
+      return res?.data;
     });
   }, []);
+
+  const qq = TypeCoachApi.getAllTypeCoach().then((res) => res?.data)
+  console.log("wfew",qq);
+
   return (
     <View style={styles.signInContainer}>
       <Image
@@ -89,6 +92,7 @@ export default function SignInScreen({ navigation }) {
           </View>
         )}
       </Formik>
+      <Text>{qq.toString()}</Text>
     </View>
   );
 }
