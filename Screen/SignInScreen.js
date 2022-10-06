@@ -1,10 +1,19 @@
+import axios from "axios";
 import { Formik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import TypeCoachApi from "../api/typeCoach";
 import { loginValidationSchema } from "../Utils/Validaion";
 
 export default function SignInScreen({ navigation }) {
+
+  useEffect(() => {
+    TypeCoachApi.getAllTypeCoach().then((res) => {
+      // setData(res?.data);
+      console.log(res?.data);
+    });
+  }, []);
   return (
     <View style={styles.signInContainer}>
       <Image
