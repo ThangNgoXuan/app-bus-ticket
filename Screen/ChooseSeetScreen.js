@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TextInput } from "react-native";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { RadioButton } from "react-native-paper";
-import { chooseSeetValidationSchema } from "../Utils/Validaion";
+import { chooseSeetValidationSchema } from "../Utils/Validation";
 
 const lisPlace = [
   {
@@ -46,8 +46,8 @@ export default function ChooseSeetScreen({ navigation }) {
           seetNumber: "",
           pointStart: checked,
         }}
-        onSubmit={(values) => {
-          console.log(values), navigation.navigate("PAYMENT");
+        onSubmit={() => {
+           navigation.navigate("PAYMENT");
         }}
         validationSchema={chooseSeetValidationSchema}
       >
@@ -139,6 +139,7 @@ export default function ChooseSeetScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
 
   titleContainer: {

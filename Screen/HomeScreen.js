@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect } from "react";
 import {
   Image,
   ScrollView,
@@ -6,26 +8,38 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
-const newList = new Array(3).fill({
-  imgSrc: "https://picsum.photos/50/50",
-  title: "Lorem Ipsum is simply dummy text",
-  subTitle:
-    "Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, ",
-});
+import newsApi from "../api/newsApi";
+import useValues from "../hooks/useValues";
 
 export default function HomeScreen({ navigation }) {
+  const [values, setValues] = useValues({
+    listNew: [],
+  });
+  useEffect(() => {
+    newsApi
+      .getAllNews()
+      .then((res) => setValues({ listNew: res.data }))
+      .catch((err) => console.log("err", err));
+  }, []);
+
   return (
     <ScrollView>
       <View style={styles.screen}>
         <View style={styles.headerContainet}>
-          <Image
-            style={styles.headerContainetIcon}
-            source={{ uri: "https://picsum.photos/40/40" }}
-          />
+          <TouchableOpacity
+            onPressIn={() =>
+              navigation.navigate("ACCOUNT")
+            }
+          >
+            <Image
+              style={styles.headerContainetIcon}
+              source={{ uri: "https://picsum.photos/40/40" }}
+            />
+          </TouchableOpacity>
           <Text style={styles.headerContainetText}>Ngô Xuân Thắng</Text>
         </View>
-        <View style={styles.carousel}></View>
+
+        {/* <View style={styles.carousel}></View> */}
         <Image
           source={{
             uri: "https://picsum.photos/200/200",
@@ -34,23 +48,64 @@ export default function HomeScreen({ navigation }) {
         />
         <View style={styles.listNew}>
           <Text style={styles.title}>Tin tức</Text>
-          {newList.map((item, index) => (
-            <TouchableOpacity
-              onPressIn={() => navigation.navigate("NEW_DETAIL")}
-              style={styles.newItem}
-              key={`newItem-${index.toString()}`}
-            >
-              <Image style={styles.newImage} source={{ uri: item.imgSrc }} />
-              <View style={styles.content}>
-                <Text style={styles.contentTitle} numberOfLines={1}>
-                  {item.title}
-                </Text>
-                <Text style={styles.contentSubTitle} numberOfLines={3}>
-                  {item.subTitle}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+          {values.listNew &&
+            values.listNew.map((item, index) => (
+              <TouchableOpacity
+                delayPressIn={500}
+                onPressIn={() =>
+                  navigation.navigate("NEW_DETAIL", { slug: item?.slug })
+                }
+                style={styles.newItem}
+                key={`newItem-${index.toString()}`}
+              >
+                {console.log("slug", item.slug)}
+                <Image
+                  style={styles.newImage}
+                  source={{ uri: item.thumbnail }}
+                />
+                <View style={styles.content}>
+                  <Text style={styles.contentTitle} numberOfLines={1}>
+                    {item?.title}
+                  </Text>
+                  <Text style={styles.contentSubTitle} numberOfLines={3}>
+                    {item?.subtitle}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+        </View>
+        <Image
+          source={{
+            uri: "https://picsum.photos/200/300",
+          }}
+          style={styles.imageBanner}
+        />
+        <View style={styles.listNew}>
+          <Text style={styles.title}>Tin tức</Text>
+          {values.listNew &&
+            values.listNew.map((item, index) => (
+              <TouchableOpacity
+                delayPressIn={500}
+                onPressIn={() =>
+                  navigation.navigate("NEW_DETAIL", { slug: item?.slug })
+                }
+                style={styles.newItem}
+                key={`newItem-${index.toString()}`}
+              >
+                <Image
+                  style={styles.newImage}
+                  source={{ uri: item.thumbnail }}
+                />
+                <View style={styles.content}>
+                  <Text style={styles.contentTitle} numberOfLines={1}>
+                    {item?.title}
+                  </Text>
+                  <Text style={styles.contentSubTitle} numberOfLines={3}>
+                    {item?.subtitle}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
         </View>
       </View>
     </ScrollView>
@@ -61,6 +116,7 @@ const styles = StyleSheet.create({
   screen: {
     alignItems: "center",
     paddingBottom: 140,
+    backgroundColor: "#fff",
   },
 
   headerContainet: {

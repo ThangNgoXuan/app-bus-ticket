@@ -1,43 +1,60 @@
-import React from "react";
-import { TouchableOpacity } from "react-native";
+import moment from "moment/moment";
+import React, { useEffect, useState } from "react";
+import {
+  ScrollView,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import { Image } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
+import RenderHTML from "react-native-render-html";
+import newsApi from "../api/newsApi";
 
-export default function NewDetailScreen({ navigation }) {
+export default function NewDetailScreen({ navigation, route }) {
+  const [data, setData] = useState();
+  const { width } = useWindowDimensions();
+  useEffect(() => {
+    const { slug } = route.params;
+    newsApi
+      .findBySlug(slug)
+      .then((res) => setData(res.data))
+      .catch((err) => console.log("err", err));
+  }, []);
+
   return (
-    <View style={styles.screen}>
+    <ScrollView>
+      <View style={styles.screen}>
         <TouchableOpacity onPressIn={() => navigation.navigate("HOME")}>
           <Image
             style={styles.iconTitle}
             source={require("../assets/Icons/arrow.png")}
           />
         </TouchableOpacity>
-      <Image
-        source={{
-          uri: "https://picsum.photos/200/200",
-        }}
-        style={styles.image}
-      />
-      <Text style={styles.title}>NewDetailScreen</Text>
-      <Text style={styles.subTitle}>07:00 20/10/2022</Text>
-      <Text style={styles.content}>
-        Lorem Ipsum chỉ đơn giản là một đoạn văn bản giả, được dùng vào việc
-        trình bày và dàn trang phục vụ cho in ấn. Lorem Ipsum đã được sử dụng
-        như một văn bản chuẩn cho ngành công nghiệp in ấn từ những năm 1500, khi
-        một họa sĩ vô danh ghép nhiều đoạn văn bản với nhau để tạo thành một bản
-        mẫu văn bản. Đoạn văn bản này không những đã tồn tại năm thế kỉ, mà khi
-        được áp dụng vào tin học văn phòng, nội dung của nó vẫn không hề bị thay
-        đổi. Nó đã được phổ biến trong những năm 1960 nhờ việc bán những bản
-        giấy Letraset in những đoạn Lorem Ipsum, và gần đây hơn, được sử dụng
-        trong các ứng dụng dàn trang, như Aldus PageMaker.
-      </Text>
-    </View>
+        <Image
+          source={{
+            uri: data?.thumbnail,
+          }}
+          style={styles.image}
+        />
+        <Text style={styles.title}>{data?.title}</Text>
+        <Text style={styles.subTitle}>
+          {moment(data?.createdAt).format("DD/MM/YYYY")}
+        </Text>
+        <Text style={styles.title}>{data?.subtitle}</Text>
+        <RenderHTML
+          contentWidth={width - 40}
+          source={{ html: `${data?.content}` }}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
   },
 
   iconTitle: {

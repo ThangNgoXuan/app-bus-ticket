@@ -124,14 +124,11 @@ export default function NavigationScreen() {
 
 const styles = StyleSheet.create({
   navigationContainer: {
-    height: 90,
+    paddingHorizontal: 20,
+    height: 64,
     position: "absolute",
-    bottom: 25,
-    right: 20,
-    left: 20,
     elevation: 0,
     backgroundColor: "#fff",
-    borderRadius: 15,
     shadowColor: "#7f5df0",
     shadowOffset: {
       width: 0,

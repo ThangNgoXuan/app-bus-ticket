@@ -45,7 +45,7 @@ export default function AccountScreen({navigation}) {
 
 const styles = StyleSheet.create({
   accountContainer: {
-    backgroundColor: "rgba(0, 28, 107, 0.05)",
+    backgroundColor: "rgba(0, 28, 107, 0.01)",
     flex: 1,
     padding: 15,
   },

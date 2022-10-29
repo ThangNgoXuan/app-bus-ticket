@@ -10,7 +10,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { bookingValidationSchema } from "../Utils/Validaion";
+import { bookingValidationSchema } from "../Utils/Validation";
 
 export default function BookingScreen({ navigation }) {
   const [datePicker, setDatePicker] = useState(false);
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: '#fff',
   },
 
   titleScreen: {

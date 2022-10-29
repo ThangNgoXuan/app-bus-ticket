@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import React from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Text, View } from "react-native";
-import { signUpValidationSchema } from "../Utils/Validaion";
+import { signUpValidationSchema } from "../Utils/Validation";
 
 export default function SignUpScreen({ navigation }) {
   return (

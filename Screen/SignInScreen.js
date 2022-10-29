@@ -1,21 +1,10 @@
 import { Formik } from "formik";
-import React, { useEffect } from "react";
+import React from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import TypeCoachApi from "../api/typeCoach";
-import { loginValidationSchema } from "../Utils/Validaion";
+import { loginValidationSchema } from "../Utils/Validation";
 
 export default function SignInScreen({ navigation }) {
-
-  useEffect(() => {
-    TypeCoachApi.getAllTypeCoach().then((res) => {
-      // setData(res?.data);
-      return res?.data;
-    });
-  }, []);
-
-  const qq = TypeCoachApi.getAllTypeCoach().then((res) => res?.data)
-  console.log("wfew",qq);
 
   return (
     <View style={styles.signInContainer}>
@@ -92,7 +81,6 @@ export default function SignInScreen({ navigation }) {
           </View>
         )}
       </Formik>
-      <Text>{qq.toString()}</Text>
     </View>
   );
 }

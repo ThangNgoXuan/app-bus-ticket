@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { CheckBox } from "react-native-elements";
-import { bookingInfoValidationSchema } from "../Utils/Validaion";
+import { bookingInfoValidationSchema } from "../Utils/Validation";
 
 export default function BookingInfoScreen({ navigation }) {
   return (
@@ -32,7 +32,6 @@ export default function BookingInfoScreen({ navigation }) {
           phone: "",
         }}
         onSubmit={(values) => {
-          console.log(values);
           navigation.navigate("CHOOSE_SEET");
         }}
       >
